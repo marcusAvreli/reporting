@@ -1,0 +1,71 @@
+{
+    "lastPage": 5,
+    "totalItems": 45,
+    "columns": [{
+		"field": "_actions_",
+        "formatter": "wj-row-selection",
+        "width": 40,
+        "maxWidth": 40,
+		 "formatterParams": [{
+            "condition": null,
+            "size": "x-large",
+            "action": "wj-modal-open",
+            "attributes": "task-id=\"{id}\"",
+            "footerHide": "true",
+            "text": "",
+            "type": "EDIT",
+            "title": "Upraviť",
+            "url": "/private/dsk/task/list/{id}"
+        }]
+		
+	}, {
+        "title": "Názov",
+        "field": "name"
+      
+        
+        
+       
+    }, {
+        "title": "Display_name",
+        "field": "displayName",
+      
+	     "headerFilterFuncParams": {
+            "type": "string"
+        }
+        
+       
+       
+     
+       
+    }, {
+        "title": "Description",
+        "field": "description",
+        "headerFilterFuncParams": {
+            "type": "string"
+        }       
+		
+    }
+    ],
+    "columnOptions": {
+       
+    },
+    "filters": [{
+      
+	
+	}],
+    "data": [
+		{
+			
+			"name": "name1",
+			"displayName": "display_name",
+			"description": "description"
+		  
+		},{
+			"id": 176,
+			"name": "name2",
+			"displayName": "display_name2",
+			"description": "description2"
+		  
+		}
+    ]
+}
