@@ -22,8 +22,10 @@ export abstract class BaseService<T> {
    * @returns gets the object found
    */
   public findById(id: any): Observable<T> {
+  const finalUrl = this.getServiceUrl()+"/"+id;
+  console.log("find_by_called_with_url: "+finalUrl);
   const options = this.getOptionsWithToken("token");
-    return this.http.get(this.getServiceUrl() + '/' + id,options).pipe(map(this.extractData), catchError(this.handleError));
+    return this.http.get(finalUrl,options).pipe(map(this.extractData), catchError(this.handleError));
       
   }
 //https://stackoverflow.com/questions/37208801/property-map-does-not-exist-on-type-observableresponse
@@ -32,9 +34,10 @@ export abstract class BaseService<T> {
    * @returns gets the list of objects found
    */
   public findAll(): Observable<T[]> {
-  console.log("this.getServiceUrl(): "+this.getServiceUrl());
+  const finalUrl = this.getServiceUrl()+"/getAll";
+  console.log("find_all_called_with_url: "+finalUrl);
   const options = this.getOptionsWithToken("token");
-    return this.http.get(this.getServiceUrl()+"/getAll",options).pipe(map(this.extractData), catchError(this.handleError));
+    return this.http.get(finalUrl,options).pipe(map(this.extractData), catchError(this.handleError));
 	  //map(this.extractData);
   }
  protected handleError(error: HttpErrorResponse) {
@@ -59,6 +62,7 @@ export abstract class BaseService<T> {
    * @returns gets the response
    */
   public delete(id): Observable<any> {
+  console.log("original delete");
    const options = this.getOptionsWithToken("token");
 
     return this.http.delete(this.getServiceUrl() + '/' + id,options).pipe(catchError(this.handleError));;

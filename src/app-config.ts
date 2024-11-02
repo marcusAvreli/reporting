@@ -27,6 +27,10 @@ export const CONFIG = <IHttpConfig> {
   },
   apiUrls: [
       { id: 'HEROES_SERVICE_URL', url: `${environment.root_api_url}/oauth2/reportDefinition` },
+	  { id: 'DB_OBJECT_SERVICE_URL', url: `${environment.root_api_url}/oauth2/dbObject` },
+	  { id: 'DB_FIELD_SERVICE_URL', url: `${environment.root_api_url}/oauth2/dbField` },
+	  { id: 'DATA_SOURCE_SERVICE_URL', url: `${environment.root_api_url}/oauth2/dataSource` },
+	  { id: 'RPRT_COLUMN_SERVICE_URL', url: `${environment.root_api_url}/oauth2/rprtColumn` },
       { id: 'VILLAINS_SERVICE_URL', url: 'app/villains' },
       { id: 'OAUTH_SERVICE_URL', url: 'http://localhost:3000/api/oauth/token' }
     ],

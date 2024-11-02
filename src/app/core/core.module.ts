@@ -8,8 +8,14 @@ import { IHttpConfig } from "./models/http-config.interface";
 import { propertiesResolverFactory } from "./properties-resolver.factory";
 import { StorageService } from "./services/storage.service";
 import { AuthGuardService } from "./services/auth-guard.service";
+import { SharedService } from "./services/shared.service";
 import { AuthInterceptor } from "./interceptors/auth-interceptor";
 import {DefinitionService} from "../definition/shared/definition.service";
+import {DbObjectService} from "../function/shared/dbObject.service";
+import {DbFieldService}  from "../field/shared/dbField.service";
+import {DataSourceService}  from "../dataSource/shared/data-source.service";
+import {RprtColumnService}  from "../sourceColumn/shared/rprt-column.service";
+
 //import { DataSourceService } from "./services/data-source.service";
 //import { CharactersService } from "./services/characters.service";
 //import { CsrfTokenInterceptor } from "./interceptors/csrf-token.interceptor";
@@ -54,6 +60,11 @@ export class CoreModule {
 				}
 				//,{ provide: 'api.config', useValue: environment.apiConfig }
 				,DefinitionService
+				,DbObjectService
+				,DbFieldService
+				,DataSourceService
+				,RprtColumnService
+				,SharedService
 
 			]
 		};

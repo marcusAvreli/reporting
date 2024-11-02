@@ -1,8 +1,15 @@
 
-import { Component ,ViewChild, ComponentFactoryResolver} from '@angular/core';
+import { Component ,ViewChild, ComponentFactoryResolver,OnDestroy, ComponentRef} from '@angular/core';
 import { AdDirective } from './ad.directive';
 import {DefinitionListComponent} from './definition/definition-list/definition-list.component';
 import {DefinitionComponent} from './definition/definition/definition.component';
+import {AddFunctionComponent} from './function/components/add/add-function.component';
+import {ListFunctionComponent} from './function/components/list/list-function.component';
+import {EditFunctionComponent} from './function/containers/edit/edit-function.component';
+import {AddFieldComponent}	from './field/components/add/add-field.component';
+import {EditFieldComponent} from './field/containers/edit/edit-field.component';
+import {EditDataSourceComponent}  from './dataSource/containers/edit/edit-data-source.component';
+import {EditDataSourceColumnComponent}  from './sourceColumn/containers/edit/edit-data-source-column.component';
 import {
 Animation
 ,Aside
@@ -72,11 +79,12 @@ Animation
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   title = 'reporting';
   @ViewChild(AdDirective) adHost: AdDirective;
+   componentRef: ComponentRef<any>;
 	public currentComponent = null;
-	public components = [DefinitionComponent,DefinitionListComponent];
+	public components = [DefinitionComponent,DefinitionListComponent/*,AddFunctionComponent,ListFunctionComponent*/,EditFunctionComponent,EditFieldComponent,EditDataSourceComponent,EditDataSourceColumnComponent];
 	
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { 
 	if (!customElements.get(Button.is)){
@@ -84,8 +92,36 @@ export class AppComponent {
 		}
 
 	}
+	public showDataSourceColumn(): void {
+		const currentComponent = this.components[5];		
+		this.setElement(currentComponent);
 	
 	
+	}
+	public showDataSource(): void {
+		const currentComponent = this.components[4];		
+		this.setElement(currentComponent);
+	
+	
+	}
+	public showField(): void {
+		const currentComponent = this.components[3];		
+		this.setElement(currentComponent);
+	
+	
+	}
+	public showFunctionEditor(): void {
+		const currentComponent = this.components[2];		
+		this.setElement(currentComponent);
+	
+	
+	}
+	public showFunctionList(): void {
+		const currentComponent = this.components[2];		
+		this.setElement(currentComponent);
+	
+	
+	}
     public renderIdentity(): void {
 		const currentComponent = this.components[0];		
 		this.setElement(currentComponent);
@@ -103,7 +139,15 @@ export class AppComponent {
 		let componentFactory = this.componentFactoryResolver.resolveComponentFactory(currentComponent as any);
 		let viewContainerRef = this.adHost.viewContainerRef;
 		viewContainerRef.clear();
-		let componentRef = viewContainerRef.createComponent(componentFactory);
+		this.componentRef = viewContainerRef.createComponent(componentFactory);
+		this.componentRef.changeDetectorRef.detectChanges();
+		
+
+	}
+	ngOnDestroy() {
+		if (this.componentRef) {
+			this.componentRef.destroy();
+		}
 	}
 	
 }

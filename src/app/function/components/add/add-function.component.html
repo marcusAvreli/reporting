@@ -1,0 +1,24 @@
+<br>
+
+
+
+ <div class="content" style="max-width: 60%;margin: auto;">
+        <wj-grid>
+          <wj-row class="gx-2">
+            <wj-col size="6">
+              <wj-input label="NAME " id="object_name" ></wj-input>
+            </wj-col>
+            <wj-col size="6">
+              <wj-input label="TYPE" id="object_type" placeholder="6 digit code" minlength="6" maxlength="8" value="function" message="Toto je moja hlaska" validate-on-change custom-error-display></wj-input>
+            </wj-col>
+          </wj-row>
+           <wj-row class="gx-2">
+            <wj-col size="12">
+				<wj-button (click)="save()">Save</wj-button>			
+			</wj-col>
+          </wj-row>
+        </wj-grid>
+      </div>
+<br>
+
+ 
