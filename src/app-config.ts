@@ -31,6 +31,9 @@ export const CONFIG = <IHttpConfig> {
 	  { id: 'DB_FIELD_SERVICE_URL', url: `${environment.root_api_url}/oauth2/dbField` },
 	  { id: 'DATA_SOURCE_SERVICE_URL', url: `${environment.root_api_url}/oauth2/dataSource` },
 	  { id: 'RPRT_COLUMN_SERVICE_URL', url: `${environment.root_api_url}/oauth2/rprtColumn` },
+	  { id: 'UV_SERVICE_URL', url: `${environment.root_api_url}/oauth2/rprtUV` },
+	  { id: 'UVC_SERVICE_URL', url: `${environment.root_api_url}/oauth2/rprtUVC` },
+	  { id: 'RPRT_SINGLE_URL', url: `${environment.root_api_url}/oauth2/rprtBuilder` },
       { id: 'VILLAINS_SERVICE_URL', url: 'app/villains' },
       { id: 'OAUTH_SERVICE_URL', url: 'http://localhost:3000/api/oauth/token' }
     ],

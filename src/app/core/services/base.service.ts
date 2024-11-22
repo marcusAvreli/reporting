@@ -78,6 +78,11 @@ export abstract class BaseService<T> {
    console.log("base_service:"+JSON.stringify(data));
     return this.http.post(this.getServiceUrl()+"/create", data,options).pipe(catchError(this.handleError));;
   }
+   public insertMany(data: T[]): Observable<any> {
+   const options = this.getOptionsWithToken("token");
+   console.log("base_service:"+JSON.stringify(data));
+    return this.http.post(this.getServiceUrl()+"/create", data,options).pipe(catchError(this.handleError));;
+  }
   
   protected extractData(res: any) {
     return res;

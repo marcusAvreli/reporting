@@ -22,6 +22,13 @@ import {AddDataSourceColumnComponent} from './sourceColumn/components/add/add-da
 import {ListDataSourceColumnComponent} from './sourceColumn/components/list/list-data-source-column.component';
 import {EditDataSourceColumnComponent} from './sourceColumn/containers/edit/edit-data-source-column.component';
 
+
+import {EditReportComponent} from './report/containers/edit/edit-report.component';
+import {AddReportComponent} from './report/components/add/add-report.component';
+
+import {ListEditReportComponent} from './report-list/containers/edit/list-edit-report.component';
+import {ListReportComponent} from './report-list/components/list/list-report.component';
+import {SingleReportComponent} from './report-list/components/single/single-report.component';
 import { CONFIG } from "../app-config";
 //https://github.com/chayxana/Restaurant-App/blob/develop/src/backend/services/web-app/src/lib/types/food-item.ts
 @NgModule({
@@ -43,6 +50,11 @@ import { CONFIG } from "../app-config";
 		,AddDataSourceColumnComponent
 		,ListDataSourceColumnComponent
 		,EditDataSourceColumnComponent
+		,EditReportComponent
+		,AddReportComponent
+		,ListReportComponent
+		,SingleReportComponent
+		,ListEditReportComponent
 	],
 	imports: [
 		BrowserModule
@@ -64,6 +76,12 @@ import { CONFIG } from "../app-config";
 		,AddDataSourceColumnComponent
 		,ListDataSourceColumnComponent
 		,EditDataSourceColumnComponent
+		,EditReportComponent
+		,AddReportComponent
+		
+		,ListReportComponent
+		,SingleReportComponent
+		,ListEditReportComponent
 	]
    , providers: [
     //{ provide: 'api.config', useValue: environment.apiConfig }

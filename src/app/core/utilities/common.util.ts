@@ -1,8 +1,16 @@
 import { ApiConfig } from '../models/api-config';
 import { ApiUrl } from '../models/api-url';
-
+import { v4 as uuidv4 } from 'uuid';
 export class CommonUtil {
 
+
+	static getId() {
+	  // blake3 is not available in the browser
+	  // remove the dashes from the uuid
+	  const u = uuidv4().replace(/-/g, "");
+	  // return the last 10 characters of the uuid
+	  return u;
+	}
     /**
      * Search the value of an specific cookie
      * @param name the name of the cookie to search

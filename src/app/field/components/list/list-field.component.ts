@@ -52,7 +52,8 @@ export class ListFieldComponent implements OnInit, OnDestroy,AfterViewInit {
 				tbl.setData(data);
 			})
 			//tbl.addEventListener("wj:slider-move",(e)=>this.test(e));			
-			tbl.addEventListener("wj:delete-row",(e)=>this.deleteRow(e));	
+			//tbl.addEventListener("wj:delete-row",(e)=>this.deleteRow(e));	
+			tbl.addEventListener("wj:tableDeleteRow",(e)=>this.deleteRow(e));
 		}
 
 	}
@@ -97,7 +98,7 @@ export class ListFieldComponent implements OnInit, OnDestroy,AfterViewInit {
 	
 	deleteRow(e){
 		console.log("edit_data_source");
-		var testValue = e.detail.value;
+		var testValue = e.detail.data;
 		console.log("testValue: "+JSON.stringify(testValue));
 		this.dbFieldService.delete(testValue).subscribe(
 			data => {console.log("hello")}

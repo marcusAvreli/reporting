@@ -3,7 +3,7 @@ import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , E
 //import { DataSource } from "../../../core/models/data-source.model";
 // services
 import { DbObjectService } from '../../shared/dbObject.service';
-import {Input,Checkbox} from 'mgcomponents';
+import {Input} from 'mgcomponents';
 import { DbObject } from "../../shared/dbObject.model";
 import { HttpClient } from '@angular/common/http'; 
 import {SharedService} from '../../../core/services/shared.service';

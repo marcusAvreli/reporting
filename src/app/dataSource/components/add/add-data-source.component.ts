@@ -6,6 +6,7 @@ import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , E
 import {Input,Checkbox} from 'mgcomponents';
 import { DbObjectService } from '../../../function/shared/dbObject.service';
 import {DataSource}from '../../shared/data-source.model';
+//DataSourceEP
 import {DataSourceService}from '../../shared/data-source.service';
 
 import {Menu,Select} from 'mgcomponents';
@@ -13,7 +14,7 @@ import {Menu,Select} from 'mgcomponents';
 import { HttpClient } from '@angular/common/http'; 
 import {SharedService} from '../../../core/services/shared.service';
 import { BehaviorSubject,Observable,Subscription } from "rxjs";
-
+import { v4 as uuidv4 } from 'uuid';
 @Component({
     selector: 'add-data-source',
     templateUrl: './add-data-source.component.html',
@@ -36,6 +37,7 @@ export class AddDataSourceComponent implements OnInit, OnDestroy,AfterViewInit {
 					//private dbFieldService:DbFieldService
 					//brings function list
 					//,private dbObjectService:DbObjectService
+					//DataSourceEP
 					private dataSourceService:DataSourceService					
 					,private sharedService: SharedService
 				){}
@@ -71,12 +73,13 @@ export class AddDataSourceComponent implements OnInit, OnDestroy,AfterViewInit {
 	const dataSourceDescriptionEl  = document.getElementById("data-source-description") as Input
 	
 	var dataSource = new DataSource();
-	
+	//DataSourceEP
 	if(dataSourceNameEl && dataSourceDisplayNameEl && dataSourceDescriptionEl){
 		dataSource.name = this.getValue(dataSourceNameEl);
 		dataSource.displayName = this.getValue(dataSourceDisplayNameEl);
 		dataSource.description = this.getValue(dataSourceDescriptionEl);
 		dataSource.disabled = 1;
+		dataSource.id=uuidv4().replace(/-/g,'');
 		this.subscriptions.push(this.dataSourceService.insert(dataSource).subscribe(() => {console.log("sss")}));
 	}
 	

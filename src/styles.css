@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+.fal{
+background-color:black;
+}
+
+:host(.fal){
+::slotted{
+
+background-color:black;
+
+}
+background-color:black;
+
+}
+
+::slotted(.fal){
+
+background-color:black;
+
+}

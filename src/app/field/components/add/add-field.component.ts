@@ -3,7 +3,7 @@ import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , E
 //import { DataSource } from "../../../core/models/data-source.model";
 // services
 import { DbFieldService } from '../../shared/dbField.service';
-import {Input,Checkbox} from 'mgcomponents';
+import {Input} from 'mgcomponents';
 import { DbObjectService } from '../../../function/shared/dbObject.service';
 import {Menu,Select} from 'mgcomponents';
 import { DbField } from "../../shared/dbField.model";

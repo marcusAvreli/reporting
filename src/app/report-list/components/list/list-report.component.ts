@@ -7,28 +7,37 @@ import {Input,Checkbox} from 'mgcomponents';
 import { DbObjectService } from '../../../function/shared/dbObject.service';
 import {DataSource}from '../../../dataSource/shared/data-source.model';
 import {DataSourceService}from '../../../dataSource/shared/data-source.service';
-import { v4 as uuidv4 } from 'uuid';
-import {Menu,Select,Popup,Button,Dialog} from 'mgcomponents';
+import { CommonUtil } from '../../../core/utilities/common.util';
+import {Menu,Select,Popup,Button,Dialog,Wizard,List,Item} from 'mgcomponents';
 //import { DbField } from "../../shared/dbField.model";
 import { HttpClient } from '@angular/common/http'; 
 import {SharedService} from '../../../core/services/shared.service';
-import { BehaviorSubject,Observable,Subscription } from "rxjs";
-import {RprtColumnService} from '../../shared/rprt-column.service';
+import { BehaviorSubject,Observable,Subscription ,switchMap,mergeMap} from "rxjs";
+//import {RprtColumnService} from '../../../sourceColumn/shared/rprt-column.service';
+//import {UvcService} from '../../shared/uvc.service';
+import {UvService} from '../../../report/shared/uv.service';
+//import {UVC} from '../../shared/uvc.model';
+import {UV} from '../../../report/shared/uv.model';
 import {Table} from 'mgcomponents';
 @Component({
-    selector: 'add-data-source-column',
-    templateUrl: './add-data-source-column.component.html',
-    styleUrls: ['./add-data-source-column.component.css']
+    selector: 'list-report',
+    templateUrl: './list-report.component.html',
+    styleUrls: ['./list-report.component.css']
 })
 //https://github.com/raceconditionrunning/raceconditionrunning.github.io/blob/main/pages/light-rail-relay-24.html#L1143
 //RelayResultsTable
-export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterViewInit {
+export class ListReportComponent implements OnInit, OnDestroy,AfterViewInit {
 	//public columnNames: any[];
 	//public tableData: any[];
 	//private rprts: Observable<DataSource[]>;  
  idProp :string = "testTable";
 	private categories: Observable<any[]>;
 	private inFunctionName: string;
+	
+	private uv_display_name:string;
+	private uv_description:string;
+	private uv_rprt_id:string;
+	private uv_id: string;
 	 @Output() valueSaved = new EventEmitter();   
 	   private subscriptions: Subscription[] = [];
 	public rowDataSub = new BehaviorSubject([] as any);
@@ -37,9 +46,14 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 					//private dbFieldService:DbFieldService
 					//brings function list
 					//,private dbObjectService:DbObjectService
+					/*
 					private rprtColumnService:RprtColumnService
-					,private dataSourceService:DataSourceService					
+					,private dataSourceService:DataSourceService
+					,private uvcService: UvcService
+					*/
+					private uvService: UvService
 					,private sharedService: SharedService
+				
 					
 				){
 			//	this.idProp="add_data_source_column_table_"+uuidv4();
@@ -47,27 +61,20 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 	
 	
 	onSuccess(data :any){	
-		var table = document.getElementById("testTable") as Table;
+		var table = document.getElementById("tableUV") as Table;
 		
 		if(table){
-			//data - list of defined reports
+			 if(data){
 			const columns = data.columns;
 			const resultData = data.data;
-			console.log(":resultData:"+JSON.stringify(resultData));
-			columns.forEach(column =>{
-			if(column.field == "id"){
-			column["visible"] = true;
-			}
-			})
 			table.setData(data);
 			table.addEventListener("wj:rowSelectionChanged",(e)=>this.rowSelected(e));
-			
-			
-		}else{
-		console.log("table_not_found");
+			}
 		}
+		
+		
 	}
-
+	
 	rowSelected(e){
 		console.log("selected_row");
 		//selected defined report
@@ -75,16 +82,52 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 		console.log("selected_row:"+JSON.stringify(selectedRow));
 		this.sharedService.messageSource.next(selectedRow);
 	}
+	onSuccess2(data:any){
+	/*console.log("onSuccess2:"+data.data);
 	
-	testSave($event){
-	console.log("save");
+	var sourceList = document.getElementById("sourceList") as List;
+		if(sourceList){
+			 if(data){
+			 const resultData = data.data;
+			 console.log("got_function_list:"+JSON.stringify(data));
+			 resultData.forEach(result => {
+			//console.log("got_function_list:"+JSON.stringify(data));
+			let item = document.createElement("wj-item");
+			//<wj-label>Baeckeoffe</wj-label>
+			//<wj-checkbox slot="end"></wj-checkbox>
+			let checkbox = document.createElement("wj-checkbox");
+			checkbox.setAttribute("slot","end");
+			let item_id = document.createElement('div');
+			item_id.setAttribute("slot","itemId");
+			item_id.textContent=result.id;
+			item.appendChild(item_id);
+			item.setAttribute("id","myId");
+			let label = document.createElement("wj-label");
+			label.textContent=result.name;
+			item.appendChild(label);
+			item.appendChild(checkbox);
+			//item.classList.add("wj-option");
+			//item.innerHTML = result.name;
+			sourceList.appendChild(item);
+			});
+			 }
+			}
+	*/
 	}
+
+	
 	
 	
 	getValue(inElement):any{
 		
 		if(inElement instanceof Input){
 			return inElement.shadowRoot.querySelector("input").value
+		}
+		if(inElement instanceof Select){
+			return inElement.value;
+		}
+		if(inElement instanceof Item){
+			return inElement.textContent;
 		}
 		return;
 		
@@ -139,12 +182,15 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 	
 	refresh(){
 	//list of defined reports
-		this.subscriptions.push(this.dataSourceService.findAll().subscribe(	
+		
+		this.subscriptions.push(this.uvService.findAll().subscribe(	
 			data => this.onSuccess(data)
 			,error => this.handleError(error)
 			,() => this.onComplete()
 		))
+		
 	}
+	
 	
 	
 /*
@@ -158,10 +204,8 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 */	
 	
 	public ngOnInit() {
-		console.log("===============================");
 		
-		
-		console.log("===============================");
+			//table.addEventListener("wj:rowSelectionChanged",(e)=>this.rowSelected(e));
 		/*
 		this.subscriptions.push(this.dbObjectService.findAll().subscribe(	
 			data => this.onSuccess(data)
@@ -183,7 +227,10 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 		
 	}
 	public ngAfterViewInit(): void {
-	this.refresh();
+		this.refresh();
+		//var wizardReport = document.getElementById("wizard-report") as Wizard;
+		//wizardReport.addEventListener("wj:wizard_finished",(e)=>this.wizardFinished(e));
+		//wizardReport.addEventListener("wj:wizard_next_step",(e)=>this.wizardNextStep(e));
 	}
 	public ngOnDestroy() {
 		this.subscriptions.forEach(subscription => subscription.unsubscribe());

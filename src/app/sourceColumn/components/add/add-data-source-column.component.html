@@ -1,11 +1,63 @@
 <br>
 
 <h1>ADD DATA SOURCE COLUMN</h1>
+<!-- 
+ <wj-button dialog="open-modal">Open</wj-button>
+ -->
 
+		
+  <div class="content">
+   <wj-popup>
+            <wj-button size="large" slot="anchor" stop-propagation="true" caret>popup</wj-button>
+			<wj-input></wj-input>
+			</wj-popup>
+  <wj-popup>
+            <wj-button size="large" slot="anchor" stop-propagation="true" caret>popup</wj-button>
+			 <wj-menu variant="context">
+              <wj-menu-item>
+                <wj-icon name="plane" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="book" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="music" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="video" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+            </wj-menu>
+  </wj-popup>
+        <wj-dropdown label="Start" placement="bottom-start" offset="5">
+            <wj-button size="large" slot="trigger" stop-propagation="true" caret>Click</wj-button>
+            <wj-menu variant="context">
+              <wj-menu-item>
+                <wj-icon name="plane" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="book" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="music" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="video" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+            </wj-menu>
+          </wj-dropdown>
 
-	<wj-table   export="xlsx,pdf" [attr.id]="idProp"  filterable="simple" > 
+	<wj-table   export="xlsx,pdf" id="testTable"  filterable="simple" > 
 <!--
 <div slot="row-activities">
+[attr.id]="idProp"
                 <wj-button>Akcia 1</wj-button>
                 <wj-button>Akcia 2</wj-button>
 			

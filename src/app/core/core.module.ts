@@ -15,7 +15,10 @@ import {DbObjectService} from "../function/shared/dbObject.service";
 import {DbFieldService}  from "../field/shared/dbField.service";
 import {DataSourceService}  from "../dataSource/shared/data-source.service";
 import {RprtColumnService}  from "../sourceColumn/shared/rprt-column.service";
-
+import {ReportService}  from "../report/shared/report.service";
+import {UvcService}  from "../report/shared/uvc.service";
+import {UvService}  from "../report/shared/uv.service";
+import {SingleReportService} from '../report-list/shared/single-report.service';
 //import { DataSourceService } from "./services/data-source.service";
 //import { CharactersService } from "./services/characters.service";
 //import { CsrfTokenInterceptor } from "./interceptors/csrf-token.interceptor";
@@ -64,6 +67,10 @@ export class CoreModule {
 				,DbFieldService
 				,DataSourceService
 				,RprtColumnService
+				,ReportService
+				,UvcService
+				,UvService
+				,SingleReportService
 				,SharedService
 
 			]

@@ -3,7 +3,7 @@ import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , E
 //import { DataSource } from "../../../core/models/data-source.model";
 // services
 
-import {Input,Checkbox,Table} from 'mgcomponents';
+import {Input,Checkbox,Table,Dialog} from 'mgcomponents';
 
 //import { DbField } from "../../shared/dbField.model";
 //import { DbFieldService } from "../../shared/dbField.service";
@@ -40,8 +40,9 @@ export class ListDataSourceColumnComponent implements OnInit, OnDestroy,AfterVie
 	public tableData: DbField[];
 	//private rprts: Observable<DataSource[]>;   
 	private categories: Observable<any[]>;
+	private reportObj : any;
 	 @Output() valueSaved = new EventEmitter();   
-	  idProp :string;
+	  idProp :string = "testTable2";
 	  private subscriptions: Subscription[] = [];
 	public rowDataSub = new BehaviorSubject([] as any);
 	constructor(/*	private heroesService: DataSourceService,private http: HttpClient*/
@@ -52,26 +53,31 @@ export class ListDataSourceColumnComponent implements OnInit, OnDestroy,AfterVie
 					,private dbFieldService : DbFieldService
 					,private sharedService: SharedService
 				){
-				this.idProp="data_source_column_table_"+uuidv4();
+				//this.idProp="data_source_column_table_"+uuidv4();
+				
 				}
 	
 	
 	onSuccess(data :any){	
 console.log("data_success:"+JSON.stringify(data));
-		var table = document.getElementById(this.idProp) as Table;
+		var table = document.getElementById("testTable2") as Table;
+		var dialog = document.getElementById("editRow") as Dialog;
+		if(dialog){
+				dialog.addEventListener("wj:modalSave",(e)=>this.save(e));
+			}
 		if(table){
 		 var editIcon = function(cell, formatterParams){ //plain text value
              var id = cell.getData().id;
-        return '<wj-button>Edit</wj-Button>';
+        return '<wj-dialog>Edit</wj-dialog>';
         };
 			let columns = data.columns;	
-			 columns.push({"title":"Edit" ,"field": "edit","formatter": editIcon
+			 columns.push({"title":"Edit" ,"field": "edit"
+        
 		
 		 });
 				table.setData(data);
-			table.addEventListener("wj:table-built", (e)=>{
-				table.setData(data);
-			})
+			table.addEventListener("wj:table-built", (e)=>{				table.setData(data);			})
+			//table.addEventListener("wj:modalSave",(e)=>this.save(e));	
 			table.addEventListener("wj:rowSelectionChanged",(e)=>this.rowSelected(e));			
 			//table.addEventListener("wj:delete-row",(e)=>this.deleteRow(e));	
 		}
@@ -100,33 +106,26 @@ console.log("data_success:"+JSON.stringify(data));
 		}
 		
 	}
-	save(){
 	
-		//var hero = new DataSource();
-
-		//this.heroesService.getHeroes().subscribe(data => {console.log(data)});
-		/*
-		const objectName = document.getElementById("object_name") as Input
-		const objectType = document.getElementById("object_type") as Input
-		
-		
-		var dbObject = new DbObject();
-		if(objectName){
+	save(e){
+	console.log("save_from_ts_2:"+JSON.stringify(e.detail));
+	//console.log("save_from_ts_2:"+JSON.stringify(e.detail.reportName));
+	if(e.detail){
+	var data = e.detail.data;
+	data['rprt_name'] = e.detail.reportName;
+	delete e.detail['reportName'];
+	data['id']=uuidv4().replace(/-/g,'')
+	//information about column definition
+//	const datum = {e.detail.value,rprt_name: e.detail.reportName}
+	this.subscriptions.push(this.rprtColumnService.insert(data).subscribe(() => {
+	this.refresh(this.reportObj);
 	
-			dbObject.object_name=this.getValue(objectName);
-			dbObject.object_type=this.getValue(objectType);
-			
-		}
-		this.dbObjectService.insert(dbObject).subscribe(() => {console.log("save_completed");
-		
-		const domEvent = new CustomEvent('unselect', { bubbles: true });    
-		this.el.nativeElement.dispatchEvent(domEvent);
-		   this.sharedService.messageSource.next('Hello from child 1!');
-		this.valueSaved.emit(dbObject);});
-		*/
-		 
+	}));
 	}
 	
+		
+		 
+	}
 	getValue(inElement):any{
 		/*
 		if(inElement instanceof Input){
@@ -178,7 +177,8 @@ console.log("data_success:"+JSON.stringify(data));
 	refresh(reportObj: any){
 	console.log("refresh_:"+JSON.stringify(reportObj));
 	const reportName = reportObj.name;
-		
+	const reportId = reportObj.id;
+		console.log("reportName:"+reportName);
 		/*
 		this.subscriptions.push(this.dbFieldService.findById(reportName).subscribe(	
 			data => this.onSuccess(data)
@@ -192,10 +192,10 @@ console.log("data_success:"+JSON.stringify(data));
 			forkJoin(
 			{
 			user: this.dbFieldService.findById(reportName),
-			roles: this.rprtColumnService.findById(reportName)
+			roles: this.rprtColumnService.findById(reportId)
 			})
 			.subscribe(
-      (results) => this.test2(results.user,results.roles)
+      (results) => this.merge(results.user,results.roles,reportId)
 	  
 	  /*
 	  console.log("results:"+results.user);
@@ -209,23 +209,62 @@ console.log("data_success:"+JSON.stringify(data));
 	console.log("fields:"+this.tableData);
 		//this.assign(fields.data[0],columns.data);
 	}
-	test2(rawFields,rprtColumns){
+	merge(rawFields,rprtColumns,reportId){
 		const rawFieldsColumns = rawFields.columns;
+		
 		const rprtColumnsColumns = rprtColumns.columns;
 		
+		console.log("rprtColumns:"+JSON.stringify(rprtColumns));
+		console.log("rprtColumns:"+JSON.stringify(rprtColumnsColumns));
+		console.log("rprtColumns:"+JSON.stringify(rawFieldsColumns));
 		var rawFieldsData = rawFields.data;
 		var rprtColumnsData = rprtColumns.data;
+		console.log("rprtColumnsData:"+JSON.stringify(rprtColumnsData));
 		
 		if(!rprtColumnsData){
 			//rprtColumns data is null
 			rprtColumnsData =[]
 			rawFieldsData.forEach(rawFieldData => {
+			//console.log("rprtColumnsData:",rprtColumns.data[0].description);
+			//console.log("rprtColumnsData:",rprtColumns.data[1].description);
 			
-				rprtColumnsData.push({name:rawFieldData.name, rprt_name:rawFieldData.function_name})
+			//console.log("rprtColumnsData:",rprtColumns.data[2].description);
+				rprtColumnsData.push({name:rawFieldData.name, rprt_name:rawFieldData.function_name,rprt_id:reportId})
 			})
+			
 			rprtColumns.data = rprtColumnsData
 			console.log("rprtColumnsData:"+rprtColumnsData);
+			console.log("rprtColumnsData:"+JSON.stringify(rprtColumnsData));
+			rprtColumnsColumns.push({"title":"rprt_name" ,"field": "rprt_name"});
 			this.onSuccess(rprtColumns);
+		}else{
+		rprtColumnsColumns.push({"title":"rprt_name" ,"field": "rprt_name"});
+		
+			rawFieldsData.forEach(rawFieldData => {
+				var exists = false;
+				//rprtColumnsData.push({name:rawFieldData.name, rprt_name:rawFieldData.function_name})
+			rprtColumnsData.forEach( rprtColumnsDatum => 
+				{ 
+				console.log("filtering_1:"+rawFieldData.function_name);
+				console.log("filtering_2:"+rprtColumnsDatum.rprt_name);
+					if(rawFieldData.name == rprtColumnsDatum.name){
+					exists = true;
+					console.log("filtering_3");
+					rprtColumnsDatum["rprt_name"]=rawFieldData.function_name;
+					}
+					})
+					if(!exists){
+					
+					rprtColumnsData.push({name:rawFieldData.name, rprt_name:rawFieldData.function_name,rprt_id:reportId})
+					}
+			
+			
+		
+			})
+			rprtColumns.data = rprtColumnsData;
+		
+						this.onSuccess(rprtColumns);
+
 		}
 
 	}
@@ -238,6 +277,7 @@ console.log("data_success:"+JSON.stringify(data));
         }
     });
 }
+
 	
 /*
 
@@ -254,6 +294,7 @@ console.log("data_success:"+JSON.stringify(data));
 	
 		this.subscriptions.push(this.sharedService.messageSource.subscribe((reportObj) => {
 		if(reportObj){
+		this.reportObj = reportObj;
 			this.refresh(reportObj);
 			}
 		}));

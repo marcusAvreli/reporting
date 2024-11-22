@@ -10,6 +10,8 @@ import {AddFieldComponent}	from './field/components/add/add-field.component';
 import {EditFieldComponent} from './field/containers/edit/edit-field.component';
 import {EditDataSourceComponent}  from './dataSource/containers/edit/edit-data-source.component';
 import {EditDataSourceColumnComponent}  from './sourceColumn/containers/edit/edit-data-source-column.component';
+import {EditReportComponent}  from './report/containers/edit/edit-report.component';
+import {ListEditReportComponent}  from './report-list/containers/edit/list-edit-report.component';
 import {
 Animation
 ,Aside
@@ -84,13 +86,21 @@ export class AppComponent implements OnDestroy {
   @ViewChild(AdDirective) adHost: AdDirective;
    componentRef: ComponentRef<any>;
 	public currentComponent = null;
-	public components = [DefinitionComponent,DefinitionListComponent/*,AddFunctionComponent,ListFunctionComponent*/,EditFunctionComponent,EditFieldComponent,EditDataSourceComponent,EditDataSourceColumnComponent];
+	public components = [DefinitionComponent,DefinitionListComponent/*,AddFunctionComponent,ListFunctionComponent*/,EditFunctionComponent,EditFieldComponent,EditDataSourceComponent,EditDataSourceColumnComponent,EditReportComponent,ListEditReportComponent];
 	
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { 
 	if (!customElements.get(Button.is)){
 			customElements.define(Button.is, Button);
 		}
 
+	}
+	public showAvailableReports(){
+		const currentComponent = this.components[7];		
+		this.setElement(currentComponent);
+	}
+	public showConf(){
+		const currentComponent = this.components[6];		
+		this.setElement(currentComponent);
 	}
 	public showDataSourceColumn(): void {
 		const currentComponent = this.components[5];		

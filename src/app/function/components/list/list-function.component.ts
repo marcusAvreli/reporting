@@ -27,7 +27,7 @@ export class ListFunctionComponent implements OnInit, OnDestroy,AfterViewInit ,O
 	private categories: Observable<any[]>;
 	public rowDataSub = new BehaviorSubject([] as any);
 	  private subscriptions: Subscription[] = [];
-	  	  idProp :string;
+	  	  idProp :string = "function_list_table2";
 
 	@Input() valueSaved;
 	constructor(/*	private heroesService: DataSourceService,private http: HttpClient*/
@@ -35,7 +35,7 @@ export class ListFunctionComponent implements OnInit, OnDestroy,AfterViewInit ,O
 					,private sharedService: SharedService
 				){
 				
-				this.idProp="function_list_table_"+uuidv4();
+				//this.idProp="function_list_table_"+uuidv4();
 				
 				}
 	
@@ -91,14 +91,15 @@ export class ListFunctionComponent implements OnInit, OnDestroy,AfterViewInit ,O
 			tbl.addEventListener("wj:table-built", (e)=>{
 				tbl.setData(data);
 			})
-				tbl.addEventListener("wj:delete-row",(e)=>this.deleteRow(e));	
+				//tbl.addEventListener("wj:delete-row",(e)=>this.deleteRow(e));
+				tbl.addEventListener("wj:tableDeleteRow",(e)=>this.deleteRow(e));
 			//tbl.addEventListener("wj:slider-move",(e)=>this.test(e));			
 		}
 
 	}
 	deleteRow(e){
 		console.log("edit_data_source");
-		var testValue = e.detail.value;
+		var testValue = e.detail.data;
 		console.log("testValue: "+JSON.stringify(testValue));
 		this.dbObjectService.delete(testValue).subscribe(
 			data => {console.log("hello")}
@@ -108,7 +109,8 @@ export class ListFunctionComponent implements OnInit, OnDestroy,AfterViewInit ,O
 		);;
 		
 		
-		console.log("testValue:"+JSON.stringify(testValue));
+		
+		//console.log("testValue:"+JSON.stringify(testValue));
 	}
 	handleError(data:any){
 		console.log("error_handling","************");
