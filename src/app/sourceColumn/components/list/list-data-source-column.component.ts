@@ -1,19 +1,10 @@
 import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , EventEmitter} from '@angular/core';
-//import { DataSourceService } from "../../../core/services/data-source.service";
-//import { DataSource } from "../../../core/models/data-source.model";
-// services
-
 import {Input,Checkbox,Table,Dialog} from 'mgcomponents';
-
-//import { DbField } from "../../shared/dbField.model";
-//import { DbFieldService } from "../../shared/dbField.service";
 import { HttpClient } from '@angular/common/http'; 
 import {SharedService} from '../../../core/services/shared.service';
 import { DbObjectService } from '../../../function/shared/dbObject.service';
-//import {DbObject}from '../../../function/shared/dbObject.model';
 import {RprtColumn}from '../../shared/rprt-column.model';
 import {RprtColumnService}from '../../shared/rprt-column.service';
-
 import { DbField } from "../../../field/shared/dbField.model";
 import { DbFieldService } from "../../../field/shared/dbField.service";
 
@@ -63,7 +54,23 @@ console.log("data_success:"+JSON.stringify(data));
 		var table = document.getElementById("testTable2") as Table;
 		var dialog = document.getElementById("editRow") as Dialog;
 		if(dialog){
-				dialog.addEventListener("wj:modalSave",(e)=>this.save(e));
+		dialog.addEventListener("wj:modalSave",(e)=>this.save(e));
+		/*dialog.addEventListener('click', (e) => {
+		console.log('wj:checkbox:change:'+e.target.checked);
+		console.log('wj:checkbox:change:'+e.target.id);
+		const isCheckbox = dialog.shadowRoot.querySelector('[id="${e.target.id}"]') instanceof Checkbox;
+		if(isCheckbox){
+		console.log("isCheckbox");
+		  // this.checked = !e.target.checked;
+		}
+		//console.log('wj:checkbox:change:'+e.checked);
+		if(e.target.checked){
+			e.target.checked=true;
+		}else{
+			e.target.checked=false;
+		}
+    });
+	*/
 			}
 		if(table){
 		 var editIcon = function(cell, formatterParams){ //plain text value

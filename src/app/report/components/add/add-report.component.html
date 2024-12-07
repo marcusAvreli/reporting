@@ -1,22 +1,41 @@
 <br>
 
 <h1>ADD report component</h1>
-<!-- 
- <wj-button dialog="open-modal">Open</wj-button>
- -->
+
 
 <wj-wizard id="wizard-report" class="wizard">
 
 <wj-wizard-nav  class="circle progress-step-active" slot="navigation">Step 1</wj-wizard-nav>
 
-<wj-wizard-nav  class="circle  progress-step-active" slot="navigation">Step 2</wj-wizard-nav>
+<wj-wizard-nav  class="circle " slot="navigation">Step 2</wj-wizard-nav>
 
 
 
 <wj-wizard-step  class="wizard-step  wizard-step-active"  slot="steps">
-<div class="form-step">
-
-
+<div class="wizard-step-main">
+ <div class="wizard-grid-container" >
+  <div class="wizard-grid-container-left-up">
+   <wj-select id="dataSource" placeholder="Select data source" variant="standard"> </wj-select>
+  </div>
+  <div class="wizard-grid-container-right-up">
+  <div class="item11">
+   <wj-input id="descriptionDataSource" label="Description">   </wj-input>
+   </div>
+  </div>
+  <div class="wizard-grid-container-left-down">
+  <div class="item11">
+   <wj-input id="description" label="Description">   </wj-input>
+   </div>
+  </div>
+  <div class="wizard-grid-container-right-down">
+   <div class="item11">
+  <wj-input id="display_name" label="Display Name" placeholder="6 digit code" ></wj-input>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+<!--
  <div class="content" style="max-width: 60%;margin: auto;min-height: 300px;">
         <wj-grid>
           <wj-row class="gx-2">
@@ -39,8 +58,8 @@
           
         </wj-grid>
       </div>
+-->
 
-</div>
 
 </wj-wizard-step> 
 <wj-wizard-step  class="wizard-step"  slot="steps">
@@ -55,12 +74,12 @@
 <div slot="transfer">
 
 </div>
-<div slot="right" style="display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/" >
-	<wj-list name="destinationList" uintTextBox searchable customDraggable id="destinationList" style="/*display:block; flex:auto;*/">
+<div slot="right" id="destinationPanel" style="display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/" >
+
+<wj-list name="destinationList" id="destinationList" uintTextBox searchable customDraggable >
 
 
 	</wj-list>
-
 </div>
 
 </wj-layout-transfer>

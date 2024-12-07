@@ -83,6 +83,26 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 	console.log("onSuccess2:"+data.data);
 	
 	var sourceList = document.getElementById("sourceList") as List;
+	  /*sourceList.addEventListener('wj:checkbox:change', (e) => {
+      console.log('source_list_check_box');
+	   if(e.target.checked){
+		e.target.removeAttribute('checked');
+	  }else{
+	  e.target.setAttribute("checked","");
+	  }
+    });
+	*/
+	var destinationList = document.getElementById("destinationList") as List;
+	 /*destinationList.addEventListener('wj:checkbox:change', (e) => {
+      console.log('destination_list_check_box');
+	 // e.target.checked = e.target.checked;
+	  if(e.target.checked){
+		e.target.removeAttribute('checked');
+	  }else{
+	  e.target.setAttribute("checked","");
+	  }
+    });
+	*/
 		if(sourceList){
 			 if(data){
 			 const resultData = data.data;
@@ -133,8 +153,11 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 					this.uv_display_name = this.getValue(display_name);
 					this.uv_description = this.getValue(descriptionEL);
 					this.uv_id=CommonUtil.getId();
-					console.log("test:"+dataSourceSelected.querySelector('[slot="itemId"]'));
-					this.uv_rprt_id = dataSourceSelected.querySelector('[slot="itemId"]').textContent;
+					console.log("addtest:"+dataSourceSelected.getSelectedOptions());
+					console.log("addtest_slot_selected:"+dataSourceSelected.getSelectedOptions()[0].querySelector('[slot="itemId"]').textContent);
+					console.log("addtest:"+dataSourceSelected.querySelector('[slot="itemId"]'));
+					this.uv_rprt_id = dataSourceSelected.getSelectedOptions()[0].querySelector('[slot="itemId"]').textContent
+					console.log("addtest:"+this.uv_rprt_id);
 					//const dataSource = this.getValue(dataSourceSelected);
 					//console.log("addReport_dataSource:"+dataSource);
 					this.subscriptions.push(this.rprtColumnService.findById(this.uv_rprt_id).subscribe(
@@ -146,6 +169,7 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 				break;
 				case 1:
 					const destinationList = children[formStepNum ].querySelector('wj-list[id="destinationList"') as List;
+					 
 					console.log("addReport_destinationList:"+destinationList.children.length);
 					const someCollection = destinationList.children
 					

@@ -1,7 +1,7 @@
 export class DataSource{
 	id:string;
 	name:string;
-	displayName:string;
+	display_name:string;
 	description:string;
 	disabled:number;
 }

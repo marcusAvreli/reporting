@@ -26,7 +26,7 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 	//public columnNames: any[];
 	//public tableData: any[];
 	//private rprts: Observable<DataSource[]>;  
- idProp :string = "testTable";
+ idProp :string = "tblRprt";
 	private categories: Observable<any[]>;
 	private inFunctionName: string;
 	 @Output() valueSaved = new EventEmitter();   
@@ -47,11 +47,14 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 	
 	
 	onSuccess(data :any){	
-		var table = document.getElementById("testTable") as Table;
+		var table = document.getElementById(this.idProp) as Table;
 		
 		if(table){
 			//data - list of defined reports
-			const columns = data.columns;
+		
+			let columns = data.columns;
+				columns.push({"title":"Delete" ,"field": "delete","formatter": "buttonCross"		
+			});
 			const resultData = data.data;
 			console.log(":resultData:"+JSON.stringify(resultData));
 			columns.forEach(column =>{
@@ -59,7 +62,9 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 			column["visible"] = true;
 			}
 			})
+			
 			table.setData(data);
+			table.addEventListener("wj:tableDeleteRow",(e)=>this.deleteRow(e));
 			table.addEventListener("wj:rowSelectionChanged",(e)=>this.rowSelected(e));
 			
 			
@@ -67,7 +72,20 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 		console.log("table_not_found");
 		}
 	}
+	deleteRow(e){
+		console.log("edit_data_source");
+		var testValue = e.detail.data;
+		console.log("testValue: "+JSON.stringify(testValue));
+		this.dataSourceService.delete(testValue).subscribe(
+			data => {console.log("hello")}
+			,error => this.handleError(error)
+			,() => this.onComplete()
 
+		);;
+		
+		
+		console.log("testValue:"+JSON.stringify(testValue));
+	}
 	rowSelected(e){
 		console.log("selected_row");
 		//selected defined report

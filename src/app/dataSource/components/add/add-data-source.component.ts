@@ -76,7 +76,7 @@ export class AddDataSourceComponent implements OnInit, OnDestroy,AfterViewInit {
 	//DataSourceEP
 	if(dataSourceNameEl && dataSourceDisplayNameEl && dataSourceDescriptionEl){
 		dataSource.name = this.getValue(dataSourceNameEl);
-		dataSource.displayName = this.getValue(dataSourceDisplayNameEl);
+		dataSource.display_name = this.getValue(dataSourceDisplayNameEl);
 		dataSource.description = this.getValue(dataSourceDescriptionEl);
 		dataSource.disabled = 1;
 		dataSource.id=uuidv4().replace(/-/g,'');

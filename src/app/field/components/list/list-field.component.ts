@@ -44,8 +44,7 @@ export class ListFieldComponent implements OnInit, OnDestroy,AfterViewInit {
 
 		if(tbl){
 		let columns = data.columns;
-		 columns.push({"title":"Delete" ,"field": "delete","formatter": "buttonCross"
-		
+			columns.push({"title":"Delete" ,"field": "delete","formatter": "buttonCross"		
 		 });
 						tbl.setData(data);
 			tbl.addEventListener("wj:table-built", (e)=>{
