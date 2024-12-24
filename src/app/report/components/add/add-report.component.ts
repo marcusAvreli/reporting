@@ -274,7 +274,7 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 	
 	getValue(inElement):any{
 		
-		if(inElement instanceof Input){
+		if(inElement.tagName.toLowerCase()==Input.is){
 			return inElement.shadowRoot.querySelector("input").value
 		}
 		if(inElement instanceof Select){

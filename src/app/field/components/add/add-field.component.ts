@@ -89,9 +89,12 @@ export class AddFieldComponent implements OnInit, OnDestroy,AfterViewInit {
 	}
 	
 	getValue(inElement):any{
-		
-		if(inElement instanceof Input){
-			return inElement.shadowRoot.querySelector("input").value
+		if(inElement){
+			//if(inElement instanceof Input){
+			const test= inElement.shadowRoot.querySelector("input").value
+			console.log("test:"+test);
+				return inElement.shadowRoot.querySelector("input").value
+			//}
 		}
 		return;
 		

@@ -1,25 +1,32 @@
 <br>
 showing available reports
-
-<div class="list-editor-main">
- <div class="grid-container" >
- 
- <div class="grid-container-upper">
- <div class="list-edit-wrapper">
- <div style="max-height:10%;display:flex;flex:auto" >
- <list-report  style="display: flex; flex-direction: column; flex: auto;"></list-report>
- </div>
- </div>
- 
- </div>
- <div class="grid-container-down">sadsadsaasdsad</div>
-<!-- 
-<list-report class="grid-container-upper" ></list-report>
-
-sadsadsaasdsad
+<!--
+<div style="display: block; flex-grow: grow">
+   <list-report  style="display: flex; flex-direction: column; flex: auto;"></list-report>
+ <single-report class="grid-container-down"></single-report>
+</div>
 -->
-<single-report class="grid-container-down"></single-report>
+<!--
+<div id="container">
+  <div class="row"> </div>
+  <div class="row" style="border: 10px doubled"><single-report class="grid-container-down"></single-report></div>
+</div>
 
+-->
+<!--
+<div id="container">
+
+<div id="top_div"> <list-report  ></list-report></div>    
+<div id="bottom_div"><single-report class="grid-container-down"></single-report></div>
 
 </div>
-</div>
+-->
+<div style="width:100%; height :100%;  direction:rtl;">
+    <div style="width:100%; height:27%; ">
+  <list-report  ></list-report> 
+    </div>
+    <div style="width:100%; height:40%;  ">
+    <single-report class="grid-container-down"></single-report>
+    </div>
+   
+  </div>

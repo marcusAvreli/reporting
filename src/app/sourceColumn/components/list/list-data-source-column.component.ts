@@ -1,14 +1,12 @@
 import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , EventEmitter} from '@angular/core';
-import {Input,Checkbox,Table,Dialog} from 'mgcomponents';
-import { HttpClient } from '@angular/common/http'; 
+import {Table,Dialog} from 'mgcomponents';
 import {SharedService} from '../../../core/services/shared.service';
-import { DbObjectService } from '../../../function/shared/dbObject.service';
 import {RprtColumn}from '../../shared/rprt-column.model';
 import {RprtColumnService}from '../../shared/rprt-column.service';
 import { DbField } from "../../../field/shared/dbField.model";
 import { DbFieldService } from "../../../field/shared/dbField.service";
 
-import { BehaviorSubject,Observable,Subscription,forkJoin,map } from "rxjs";
+import { Observable,Subscription,forkJoin,map } from "rxjs";
 import { v4 as uuidv4 } from 'uuid';
 @Component({
     selector: 'list-data-source-column',
@@ -27,19 +25,13 @@ This means that the operator gets values from completed observables and returns 
 */
 //RelayResultsTable
 export class ListDataSourceColumnComponent implements OnInit, OnDestroy,AfterViewInit {
-	//public columnNames: any[];
-	public tableData: DbField[];
-	//private rprts: Observable<DataSource[]>;   
-	private categories: Observable<any[]>;
-	private reportObj : any;
-	 @Output() valueSaved = new EventEmitter();   
-	  idProp :string = "testTable2";
-	  private subscriptions: Subscription[] = [];
-	public rowDataSub = new BehaviorSubject([] as any);
-	constructor(/*	private heroesService: DataSourceService,private http: HttpClient*/
-					private el: ElementRef
-					//,private dbObjectService:DbObjectService
-					//,private dataSourceService:DataSourceService
+	
+	public tableData: DbField[];	
+	private reportObj : any;	
+	idProp :string = "testTable2";
+	private subscriptions: Subscription[] = [];
+	//public rowDataSub = new BehaviorSubject([] as any);
+	constructor(	private el: ElementRef			
 					,private rprtColumnService:RprtColumnService
 					,private dbFieldService : DbFieldService
 					,private sharedService: SharedService
@@ -50,88 +42,36 @@ export class ListDataSourceColumnComponent implements OnInit, OnDestroy,AfterVie
 	
 	
 	onSuccess(data :any){	
-console.log("data_success:"+JSON.stringify(data));
+		console.log("data_success:"+JSON.stringify(data));
 		var table = document.getElementById("testTable2") as Table;
 		var dialog = document.getElementById("editRow") as Dialog;
 		if(dialog){
-		dialog.addEventListener("wj:modalSave",(e)=>this.save(e));
-		/*dialog.addEventListener('click', (e) => {
-		console.log('wj:checkbox:change:'+e.target.checked);
-		console.log('wj:checkbox:change:'+e.target.id);
-		const isCheckbox = dialog.shadowRoot.querySelector('[id="${e.target.id}"]') instanceof Checkbox;
-		if(isCheckbox){
-		console.log("isCheckbox");
-		  // this.checked = !e.target.checked;
+			dialog.addEventListener("wj:modalSave",(e)=>this.save(e));
+		
 		}
-		//console.log('wj:checkbox:change:'+e.checked);
-		if(e.target.checked){
-			e.target.checked=true;
-		}else{
-			e.target.checked=false;
-		}
-    });
-	*/
-			}
 		if(table){
-		 var editIcon = function(cell, formatterParams){ //plain text value
-             var id = cell.getData().id;
-        return '<wj-dialog>Edit</wj-dialog>';
-        };
+			var editIcon = function(cell, formatterParams){
+				var id = cell.getData().id;
+				return '<i class="fa fa-edit">';
+			};
 			let columns = data.columns;	
-			 columns.push({"title":"Edit" ,"field": "edit"
-        
-		
-		 });
-				table.setData(data);
-			table.addEventListener("wj:table-built", (e)=>{				table.setData(data);			})
-			//table.addEventListener("wj:modalSave",(e)=>this.save(e));	
-			table.addEventListener("wj:rowSelectionChanged",(e)=>this.rowSelected(e));			
-			//table.addEventListener("wj:delete-row",(e)=>this.deleteRow(e));	
+			columns.push({"title":"Edit" ,"field": "edit" ,"formatter":	editIcon });
+			table.setData(data);	
 		}
-	}
-	
-	rowSelected(e){
-		
-		const selectedRow = e.detail.data[0];
-		
-		//var dbObject = new DbObject();
-		
-		if(selectedRow && selectedRow.name){
-		/*this.subscriptions.push(this.dataSourceService.findById(selectedRow.name).subscribe(	
-			data => { console.log("success:"+data);
-			if(selectedRow){
-			var target = {name : selectedRow.name};
-			
-			this.sharedService.messageSource.next(Object.assign(target, data));
-			
-			}
-			}
-			,error => this.handleError(error)
-			,() => this.onComplete()
-			))
-			*/
-		}
-		
 	}
 	
 	save(e){
-	console.log("save_from_ts_2:"+JSON.stringify(e.detail));
-	//console.log("save_from_ts_2:"+JSON.stringify(e.detail.reportName));
-	if(e.detail){
-	var data = e.detail.data;
-	data['rprt_name'] = e.detail.reportName;
-	delete e.detail['reportName'];
-	data['id']=uuidv4().replace(/-/g,'')
-	//information about column definition
-//	const datum = {e.detail.value,rprt_name: e.detail.reportName}
-	this.subscriptions.push(this.rprtColumnService.insert(data).subscribe(() => {
-	this.refresh(this.reportObj);
-	
-	}));
-	}
-	
-		
-		 
+		console.log("save_from_ts_2:"+JSON.stringify(e.detail));		
+		if(e.detail){
+			var data = e.detail.data;
+			data['rprt_name'] = e.detail.reportName;
+			delete e.detail['reportName'];
+			data['id']=uuidv4().replace(/-/g,'');
+			this.subscriptions.push(this.rprtColumnService.insert(data).subscribe(() => {
+				this.refresh(this.reportObj);
+			
+			}));
+		}		 
 	}
 	getValue(inElement):any{
 		/*

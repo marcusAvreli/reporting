@@ -29,7 +29,8 @@
 			
             "styles": [
               "src/styles.css"
-			   ,"src/assets/css/pages.css"
+			 
+				,"node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
 			"customWebpackConfig": {
               "path": "./extra-webpack.config.js"
@@ -98,6 +99,8 @@
             ],
             "styles": [
               "src/styles.css"
+			  "src/assets/font-awesome-rtl.css"
+			 
             ],
             "scripts": []
           }

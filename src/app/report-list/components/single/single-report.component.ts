@@ -38,9 +38,14 @@ export class SingleReportComponent implements OnInit, OnDestroy,AfterViewInit {
 			var table = document.getElementById(this.idProp) as Table;	
 			var columns = data.columns;
 			columns = columns.slice().sort((a, b) =>  a.ordering - b.ordering);			
+			
+			console.log("columns:"+JSON.stringify(columns))
+			
 			data.columns = columns;
 			if(table){				
 				table.setData(data);
+				console.log("columns:"+JSON.stringify(columns))
+				console.log("data:"+JSON.stringify(data.data))
 				//table.addEventListener("wj:rowSelectionChanged",(e)=>this.rowSelected(e));
 			}
 		}		

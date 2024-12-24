@@ -1,6 +1,8 @@
 <br>
 
 <h1>single report component</h1>
-<wj-table   export="xlsx,pdf" id="userReport"  filterable="simple" > 
-
+<wj-table   export="xlsx,pdf,csv" id="userReport"  filterable="simple" > 
+<div slot="filter">
+<wj-myflatpickr></wj-myflatpickr>
+</div>
 </wj-table>

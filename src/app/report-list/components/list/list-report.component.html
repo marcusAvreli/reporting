@@ -1,86 +1,25 @@
-<div class="list-report-main" >
-<!--
-<wj-layout-two-columns style="height: auto;    display: flex;    border: 10px dotted coral;">
--->
-<wj-layout-two-columns >
-
-
-  <wj-list id="listUV" searchable slot="left" >
-<!--
-              <wj-item>
-                <wj-thumbnail slot="start">
-                  <img
-                    alt="Silhouette of mountains"
-                    src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-                  />
-                </wj-thumbnail>
-                <wj-label>Item</wj-label>
-              </wj-item>
-
-              <wj-item>
-                <wj-thumbnail slot="start">
-                  <img
-                    alt="Silhouette of mountains"
-                    src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-                  />
-                </wj-thumbnail>
-                <wj-label>Item</wj-label>
-              </wj-item>
---><!--
-              <wj-item>
-                <wj-thumbnail slot="start">
-                  <img
-                    alt="Silhouette of mountains"
-                    src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-                  />
-                </wj-thumbnail>
-                <wj-label>Item</wj-label>
-              </wj-item>
-
-              <wj-item lines="none">
-                <wj-thumbnail slot="start">
-                  <img
-                    alt="Silhouette of mountains"
-                    src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-                  />
-                </wj-thumbnail>
-                <wj-label>Item</wj-label>
-              </wj-item>
-			  
-			    <wj-item lines="none">
-                <wj-thumbnail slot="start">
-                  <img
-                    alt="Silhouette of mountains"
-                    src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-                  />
-                </wj-thumbnail>
-                <wj-label>Item</wj-label>
-              </wj-item>
+<div class="list-report-main" style="direction:rtl">
+	<!--
+	<wj-layout-two-columns style="height: auto;    display: flex;    border: 10px dotted coral;">
 	-->
+	<wj-layout-two-columns style="width:100%">
+		<wj-list id="listUV" searchable slot="left" >
+		</wj-list>
+		<div slot="rightUp" >
+			<div>
+				<wj-textarea id="uv-display-name" label="Display Name" name="dog" rows="1" max-length="24" counter></wj-textarea>
+			</div>
+		</div>
 
-</wj-list>
-
-<div slot="rightUp" >
-
- <div>
-    <wj-textarea id="uv-display-name" label="Display Name" name="dog" rows="1" max-length="24" counter></wj-textarea>
-	</div>
+		<div slot="rightDown">
+			<div >
+				<wj-textarea id="uv-description" label="Description" name="dog" rows="1" max-length="250" counter></wj-textarea>
+			</div>
+		</div>
+		<div slot="rightButtons">
+			<div >
+				<wj-button (click)="showFunctionList()">Execute</wj-button>
+			</div>
+		</div>
+	</wj-layout-two-columns>
 </div>
-
-<div slot="rightDown">
- <div >
-   <wj-textarea id="uv-description" label="Description" name="dog" rows="3" max-length="250" counter></wj-textarea>
-	</div>
-</div>
-<div slot="rightButtons">
-<div >
-   <wj-button (click)="showFunctionList()">Execute</wj-button>
-	</div>
-</div>
-</wj-layout-two-columns>
-</div>
-<!--
-<wj-table   export="xlsx,pdf" id="tableUV"  filterable="simple" > 
-
-</wj-table>
--->
