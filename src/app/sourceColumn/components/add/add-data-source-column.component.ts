@@ -53,7 +53,7 @@ export class AddDataSourceColumnComponent implements OnInit, OnDestroy,AfterView
 			//data - list of defined reports
 		
 			let columns = data.columns;
-				columns.push({"title":"Delete" ,"field": "delete","formatter": "buttonCross"		
+				columns.push({"title":"Delete" ,"field": "delete","formatter": "buttonCross","hozAlign": "center"		
 			});
 			const resultData = data.data;
 			console.log(":resultData:"+JSON.stringify(resultData));

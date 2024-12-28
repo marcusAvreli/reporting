@@ -3,12 +3,12 @@ import {Component,ElementRef, Inject, OnDestroy, OnInit,AfterViewInit,Output , E
 //import { DataSource } from "../../../core/models/data-source.model";
 // services
 //import { DbFieldService } from '../../shared/dbField.service';
-import {Input,Checkbox} from 'mgcomponents';
+
 import { DbObjectService } from '../../../function/shared/dbObject.service';
 import {DataSource}from '../../../dataSource/shared/data-source.model';
 import {DataSourceService}from '../../../dataSource/shared/data-source.service';
 import { CommonUtil } from '../../../core/utilities/common.util';
-import {Menu,Select,Popup,Button,Dialog,Wizard,List,Item} from 'mgcomponents';
+import {Menu,Select,Popup,Button,Dialog,Wizard,Input,List,Item,Label} from 'mgcomponents';
 //import { DbField } from "../../shared/dbField.model";
 import { HttpClient } from '@angular/common/http'; 
 import {SharedService} from '../../../core/services/shared.service';
@@ -18,7 +18,7 @@ import {UvcService} from '../../shared/uvc.service';
 import {UvService} from '../../shared/uv.service';
 import {UVC} from '../../shared/uvc.model';
 import {UV} from '../../shared/uv.model';
-import {Table} from 'mgcomponents';
+//import {Table} from 'mgcomponents';
 @Component({
     selector: 'add-report',
     templateUrl: './add-report.component.html',
@@ -79,57 +79,36 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 		}
 		
 	}
-	onSuccess2(data:any){
-	console.log("onSuccess2:"+data.data);
-	
-	var sourceList = document.getElementById("sourceList") as List;
-	  /*sourceList.addEventListener('wj:checkbox:change', (e) => {
-      console.log('source_list_check_box');
-	   if(e.target.checked){
-		e.target.removeAttribute('checked');
-	  }else{
-	  e.target.setAttribute("checked","");
-	  }
-    });
-	*/
-	var destinationList = document.getElementById("destinationList") as List;
-	 /*destinationList.addEventListener('wj:checkbox:change', (e) => {
-      console.log('destination_list_check_box');
-	 // e.target.checked = e.target.checked;
-	  if(e.target.checked){
-		e.target.removeAttribute('checked');
-	  }else{
-	  e.target.setAttribute("checked","");
-	  }
-    });
-	*/
+	onSuccess2(data:any){		
+		var sourceList = document.getElementById("sourceList") as List;		 
+		var destinationList = document.getElementById("destinationList") as List;		
 		if(sourceList){
-			 if(data){
-			 const resultData = data.data;
-			 console.log("got_function_list:"+JSON.stringify(data));
-			 resultData.forEach(result => {
-			//console.log("got_function_list:"+JSON.stringify(data));
-			let item = document.createElement("wj-item");
-			//<wj-label>Baeckeoffe</wj-label>
-			//<wj-checkbox slot="end"></wj-checkbox>
-			let checkbox = document.createElement("wj-checkbox");
-			checkbox.setAttribute("slot","end");
-			let item_id = document.createElement('div');
-			item_id.setAttribute("slot","itemId");
-			item_id.textContent=result.id;
-			item.appendChild(item_id);
-			item.setAttribute("id","myId");
-			let label = document.createElement("wj-label");
-			label.textContent=result.name;
-			item.appendChild(label);
-			item.appendChild(checkbox);
-			//item.classList.add("wj-option");
-			//item.innerHTML = result.name;
-			sourceList.appendChild(item);
-			});
-			 }
+			//https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+			while (sourceList.lastElementChild) {
+				sourceList.removeChild(sourceList.lastElementChild);
 			}
-	
+			while (destinationList.lastElementChild) {
+				destinationList.removeChild(destinationList.lastElementChild);
+			}
+			if(data){
+				const resultData = data.data;				
+				resultData.forEach(result => {					
+					let item = document.createElement("wj-item");				
+					let checkbox = document.createElement("wj-checkbox");
+					checkbox.setAttribute("slot","end");
+					let item_id = document.createElement('div');
+					item_id.setAttribute("slot","itemId");
+					item_id.textContent=result.id;
+					item.appendChild(item_id);
+					item.setAttribute("id","myId");
+					let label = document.createElement("wj-label");
+					label.textContent=result.name;
+					item.appendChild(label);
+					item.appendChild(checkbox);					
+					sourceList.appendChild(item);
+				});
+			}
+		}	
 	}
 
 	wizardFinished(e){
@@ -148,8 +127,11 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 			switch (formStepNum){
 				case 0:
 					const dataSourceSelected = children[formStepNum ].querySelector('wj-select[id="dataSource"') as Select;
+					 //dataSourceSelected.addEventListener('wj:option-change', (e) => {console.log("ffffff") })
+					
 					const display_name = children[formStepNum ].querySelector('wj-input[id="display_name"]') as Input;
 					const descriptionEL = children[formStepNum ].querySelector('wj-input[id="description"]') as Input;
+					//const descriptionEL = children[formStepNum ].querySelector('wj-label[id="description"]') as Label;
 					this.uv_display_name = this.getValue(display_name);
 					this.uv_description = this.getValue(descriptionEL);
 					this.uv_id=CommonUtil.getId();
@@ -274,7 +256,8 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 	
 	getValue(inElement):any{
 		
-		if(inElement.tagName.toLowerCase()==Input.is){
+		if(inElement.tagName.toLowerCase()=="wj-input"){
+		//if(inElement instanceof Input){
 			return inElement.shadowRoot.querySelector("input").value
 		}
 		if(inElement instanceof Select){
@@ -324,18 +307,11 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 	onComplete(){
 		//console.log("complete");
 	}
-	 optionChange = (e) => {
-		//this.inFunctionName = e.target.value;
-		//this.sharedService.messageSource.next(this.inFunctionName);
-	 }
-	/*
-	public getJSON(): Observable<any> {
-		return this.http.get("./assets/advanced.json");
-	}
-	*/
+	
+	
 	
 	refresh(){
-	//list of defined reports
+		//list of defined reports
 		this.subscriptions.push(this.dataSourceService.findAll().subscribe(	
 			data => this.onSuccess(data)
 			,error => this.handleError(error)
@@ -345,7 +321,21 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 	
 	
 	wizardClosed(e){
-	 console.log("add_report_wizard_closed");
+		console.log("add_report_wizard_closed");
+	}
+	optionSelected(e){
+		const dataSourceSelect = document.querySelector('wj-select[id="dataSource"') as Select;
+		const descriptionDataSource = document.querySelector('wj-label[id="descriptionDataSource"') as Label;
+		if(dataSourceSelect && descriptionDataSource){
+			this.uv_rprt_id = dataSourceSelect.getSelectedOptions()[0].querySelector('[slot="itemId"]').textContent			
+			this.subscriptions.push(
+				this.dataSourceService.findById(this.uv_rprt_id).subscribe(
+					data => { descriptionDataSource.value =data.description  }
+					,error => this.handleError(error)
+					,() => this.onComplete()
+				)
+			)
+		}
 	}
 /*
 
@@ -389,6 +379,11 @@ export class AddReportComponent implements OnInit, OnDestroy,AfterViewInit {
 		var wizardReport = document.getElementById("wizard-report") as Wizard;
 		wizardReport.addEventListener("wj:wizard_finished",(e)=>this.wizardFinished(e));
 		wizardReport.addEventListener("wj:wizard_next_step",(e)=>this.wizardNextStep(e));
+		//var dataSourceSelect = document.getElementById("dataSource") as Select;
+		const dataSourceSelect = document.querySelector('wj-select[id="dataSource"');
+		if(dataSourceSelect){
+			dataSourceSelect.addEventListener("wj:selection-changed", (e) => this.optionSelected(e));
+		}
 	}
 	public ngOnDestroy() {
 		this.subscriptions.forEach(subscription => subscription.unsubscribe());

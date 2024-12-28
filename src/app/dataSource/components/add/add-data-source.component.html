@@ -2,44 +2,42 @@
 
 <h1>add data source</h1>
 
+<div class="wizard-step-main">
+ <div class="wizard-grid-container" >
+  <div class="wizard-grid-container-left-up">
+ <div class="item11">
+	<wj-input  variant="standard" id="data-source-display-name" label="mg.display.name" placeholder="rprt" ></wj-input>
+ </div>
+  </div>
+  <div class="wizard-grid-container-right-up">
+  <div class="item11">
+ <wj-input variant="standard" id="data-source-name" label="mg.name"></wj-input>
+   </div>
+  </div>
+  <div class="wizard-grid-container-left-down">
+  <div class="item11">
+  <wj-input variant="standard" label="mg.email"></wj-input>
+   
+   </div>
+  </div>
+  <div class="wizard-grid-container-right-down">
+   <div class="item11">
+ <wj-input variant="standard" id="data-source-description" label="mg.description"></wj-input>
+  </div>
+  </div>
+   <div class="wizard-grid-container-left-down2">
+  <div class="item11">
+ <wj-button (click)="save()">mg.save</wj-button>
+   
+   </div>
+  </div>
+  <div class="wizard-grid-container-right-down2">
+   <div class="item11">
 
+  </div>
+  </div>
+  </div>
+  </div>
 	
- <div class="playground">
-      <div class="content" style="max-width: 60%;margin: auto;min-height: 300px;">
-        <wj-grid>
-          <wj-row class="gx-2">
-            <wj-col size="6">
-              <wj-input id="data-source-name" label="Name"></wj-input>
-            </wj-col>
-            <wj-col size="6">
-              <wj-input id="data-source-display-name" label="Display Name" placeholder="rprt" ></wj-input>
-            </wj-col>
-          </wj-row>
-          <wj-row>
-            <wj-col size="12">
-              <wj-input id="data-source-description" label="Description">
-               
-              </wj-input>
-            </wj-col>
-          </wj-row>
-          <wj-row class="gx-2">
-            <wj-col size="6">
-             	<wj-button (click)="save()">Save</wj-button>
-            </wj-col>
-            <wj-col size="6">
-              <wj-input label="Email"></wj-input>
-            </wj-col>
-          </wj-row>
-        </wj-grid>
-      </div>
-    </div>
-		<!--
-<wj-dropdown id="function_list" placement="bottom-end" offset="5">
-<wj-button slot="trigger" caret>Dropdown</wj-button>
-<wj-menu id="menu-child" variant="context">
  
-</wj-menu>
-</wj-dropdown>
-       
-		
-	-->
+	

@@ -74,10 +74,11 @@ export class OAuth2Service  {
 				
 			).toPromise().then(res => {
 				if(res){
-					var test = res as Ret;			
-					
-					var numberValue = (test.expires_in);			
-					localStorage.setItem("token", test.access_token);
+					var result = res as Ret;			
+					console.log("result:"+JSON.stringify(result));
+					var numberValue = (result.expires_in);	
+					console.log("numberValue:"+numberValue);					
+					localStorage.setItem("token", result.access_token);
 					localStorage.setItem("expires_in", ""+(numberValue)+"");
 				}
 			}) ;
@@ -91,6 +92,7 @@ export class OAuth2Service  {
 	
 	private activateRenewInterval() {	
 		this.expiresIn = localStorage.getItem("expires_in")!;	
+		console.log("expires_in:"+this.expiresIn);
 		setInterval(async () => {await this.renewToken()}, Number(this.expiresIn)*1000);
 	}
 }

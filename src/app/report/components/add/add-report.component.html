@@ -3,7 +3,7 @@
 <h1>ADD report component</h1>
 
 
-<wj-wizard id="wizard-report" class="wizard">
+<wj-wizard id="wizard-report" style="direction:rtl" class="wizard">
 
 <wj-wizard-nav  class="circle progress-step-active" slot="navigation">Step 1</wj-wizard-nav>
 
@@ -19,53 +19,31 @@
   </div>
   <div class="wizard-grid-container-right-up">
   <div class="item11">
-   <wj-input id="descriptionDataSource" label="Description">   </wj-input>
+   <wj-label id="descriptionDataSource" lang="he">   </wj-label>
    </div>
   </div>
   <div class="wizard-grid-container-left-down">
   <div class="item11">
-   <wj-input id="description" label="Description">   </wj-input>
+   <wj-input id="display_name"  lang="he" label="mg.display.name" placeholder="6 digit code" ></wj-input>
+   
    </div>
   </div>
   <div class="wizard-grid-container-right-down">
    <div class="item11">
-  <wj-input id="display_name" label="Display Name" placeholder="6 digit code" ></wj-input>
+ <wj-input id="description"  label="mg.description">   </wj-input>
   </div>
   </div>
   
   </div>
   </div>
-<!--
- <div class="content" style="max-width: 60%;margin: auto;min-height: 300px;">
-        <wj-grid>
-          <wj-row class="gx-2">
-            <wj-col size="6">
-                 <wj-select id="dataSource" placeholder="Select data source" variant="standard">
-          
-        </wj-select>
-            </wj-col>
-            <wj-col size="6">
-              <wj-input id="display_name" label="Display Name" placeholder="6 digit code" ></wj-input>
-            </wj-col>
-          </wj-row>
-          <wj-row>
-            <wj-col size="12">
-              <wj-input id="description" label="Description">
-                
-              </wj-input>
-            </wj-col>
-          </wj-row>
-          
-        </wj-grid>
-      </div>
--->
+
 
 
 </wj-wizard-step> 
 <wj-wizard-step  class="wizard-step"  slot="steps">
 <wj-layout-transfer>
 <div id="sourcePanel" slot="left" style="display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/" >
-<wj-list name="sourceList" id="sourceList"  style="/*display:block; flex:auto;*/">
+<wj-list name="sourceList" id="sourceList" uintTextBox searchable  style="/*display:block; flex:auto;*/">
 
 
 </wj-list>

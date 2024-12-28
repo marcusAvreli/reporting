@@ -55,7 +55,8 @@ export class ListDataSourceColumnComponent implements OnInit, OnDestroy,AfterVie
 				return '<i class="fa fa-edit">';
 			};
 			let columns = data.columns;	
-			columns.push({"title":"Edit" ,"field": "edit" ,"formatter":	editIcon });
+			columns.push({"title":"Edit" ,"field": "edit" , 
+        "hozAlign": "center","formatter":	editIcon });
 			table.setData(data);	
 		}
 	}
